@@ -6,8 +6,33 @@ from line.reply_helper import send_error_reply, send_grading_reply
 from utils.logger import logger
 
 
+LOG_TEXT_LIMIT = 120
+
+
 def _is_group_like_source(source: dict | None) -> bool:
     return (source or {}).get("type") in {"group", "room"}
+
+
+def _log_event(event: dict, action: str, reason: str | None, grading_text: str | None) -> None:
+    message = event.get("message", {})
+    source = event.get("source", {})
+    raw_text = message.get("text") if isinstance(message, dict) else None
+    text_preview = None
+    if isinstance(raw_text, str):
+        text_preview = raw_text.replace("\n", "\\n")[:LOG_TEXT_LIMIT]
+    logger.info(
+        "LINE event: event_type=%s message_type=%s source_type=%s group_id=%s room_id=%s user_id=%s text=%r action=%s reason=%s grading_text=%r",
+        event.get("type"),
+        message.get("type") if isinstance(message, dict) else None,
+        source.get("type") if isinstance(source, dict) else None,
+        source.get("groupId") if isinstance(source, dict) else None,
+        source.get("roomId") if isinstance(source, dict) else None,
+        source.get("userId") if isinstance(source, dict) else None,
+        text_preview,
+        action,
+        reason,
+        grading_text,
+    )
 
 
 def _send_skip_hint(reply_token: str, reason: str | None) -> None:
@@ -21,6 +46,7 @@ def _send_skip_hint(reply_token: str, reason: str | None) -> None:
 
 def handle_event(event: dict) -> None:
     decision = should_grade_message(event)
+    _log_event(event, decision.action, decision.reason, decision.text)
     if event.get("type") != "message":
         return
 
