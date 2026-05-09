@@ -7,7 +7,7 @@ import urllib.parse
 import urllib.request
 from typing import Any
 
-from ..utils.errors import NlpApiError
+from utils.errors import NlpApiError
 
 
 def _normalize_api_url(api_url: str) -> str:
@@ -38,4 +38,3 @@ def check_grammar(text: str, timeout: float = 10.0) -> dict[str, Any]:
         return json.loads(payload)
     except json.JSONDecodeError as exc:
         raise NlpApiError("Invalid response from LanguageTool") from exc
-

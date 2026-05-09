@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from ..grading.types import Issue
-from ..nlp.scorer import NlpScore
+from grading.types import Issue
+from nlp.scorer import NlpScore
 
 
 @dataclass(frozen=True)

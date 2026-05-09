@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from typing import Any, Callable
 
-from ..config.constants import MAX_TEXT_LENGTH
-from ..grading.pipeline import run_grading_pipeline
-from ..grading.types import GradingResult
-from ..utils.logger import logger
-from ..utils.text import contains_chinese
+from config.constants import MAX_TEXT_LENGTH
+from grading.pipeline import run_grading_pipeline
+from grading.types import GradingResult
+from utils.logger import logger
+from utils.text import contains_chinese
 
 
 def invalid_text(message: str) -> tuple[int, dict[str, Any]]:
@@ -34,4 +34,3 @@ def grade_text_payload(
     except Exception as exc:
         logger.error("POST /grade failed: %s", exc)
         return 500, {"error": {"code": "grading_failed", "message": "grading failed"}}
-

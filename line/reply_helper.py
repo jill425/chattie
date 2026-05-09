@@ -5,8 +5,8 @@ import os
 import urllib.error
 import urllib.request
 
-from ..grading.formatter import format_reply
-from ..grading.types import GradingResult
+from grading.formatter import format_reply
+from grading.types import GradingResult
 
 
 def _reply_message(reply_token: str, text: str, timeout: float = 10.0) -> None:
@@ -33,4 +33,3 @@ def send_grading_reply(reply_token: str, result: GradingResult) -> None:
 
 def send_error_reply(reply_token: str, message: str) -> None:
     _reply_message(reply_token, message)
-

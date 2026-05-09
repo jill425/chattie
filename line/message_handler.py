@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from ..grading.pipeline import run_grading_pipeline
-from ..utils.logger import logger
-from .message_filter import should_grade_message
-from .reply_helper import send_error_reply, send_grading_reply
+from grading.pipeline import run_grading_pipeline
+from line.message_filter import should_grade_message
+from line.reply_helper import send_error_reply, send_grading_reply
+from utils.logger import logger
 
 
 def _is_group_like_source(source: dict | None) -> bool:
@@ -50,4 +50,3 @@ def handle_event(event: dict) -> None:
             send_error_reply(token, "批改時發生錯誤，請稍後再試")
         except Exception as fallback_exc:
             logger.error("fallback reply failed: %s", fallback_exc)
-

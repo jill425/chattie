@@ -6,9 +6,9 @@ import urllib.error
 import urllib.request
 from dataclasses import dataclass
 
-from ..config.constants import LLM_MAX_TOKENS, LLM_MODEL
-from ..utils.errors import LlmApiError
-from .prompt import LlmPrompt
+from config.constants import LLM_MAX_TOKENS, LLM_MODEL
+from llm.prompt import LlmPrompt
+from utils.errors import LlmApiError
 
 
 @dataclass(frozen=True)
@@ -62,4 +62,3 @@ def call_llm(prompt: LlmPrompt, timeout: float = 30.0) -> LlmResponse:
         input_tokens=int(usage.get("input_tokens", 0)),
         output_tokens=int(usage.get("output_tokens", 0)),
     )
-

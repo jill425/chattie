@@ -4,8 +4,8 @@ import re
 from dataclasses import dataclass
 from typing import Literal
 
-from ..config.constants import MAX_TEXT_LENGTH
-from ..utils.text import contains_chinese
+from config.constants import MAX_TEXT_LENGTH
+from utils.text import contains_chinese
 
 GROUP_COMMAND_PATTERN = re.compile(r"^/(?:check|grade|fix)\s+(.+)", re.I)
 URL_PATTERN = re.compile(r"https?://\S+|www\.\S+", re.I)
@@ -82,4 +82,3 @@ def should_grade_message(event: dict) -> MessageFilterDecision:
         return MessageFilterDecision("grade", text=command_text)
 
     return MessageFilterDecision("grade", text=text)
-

@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from ..llm.client import call_llm
-from ..llm.parser import parse_response
-from ..llm.prompt import build_prompt
-from ..nlp.client import check_grammar
-from ..nlp.scorer import NlpScore, score_text
-from ..utils.logger import logger
+from llm.client import call_llm
+from llm.parser import parse_response
+from llm.prompt import build_prompt
+from nlp.client import check_grammar
+from nlp.scorer import NlpScore, score_text
+from utils.logger import logger
 from .router import route_grading
 from .types import GradingResult
 
@@ -46,4 +46,3 @@ def run_grading_pipeline(text: str) -> GradingResult:
     except Exception as exc:
         logger.warning("LLM downgrade: %s", exc)
         return _to_nlp_only_result(text, nlp_score)
-

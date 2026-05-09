@@ -4,11 +4,11 @@ import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
 
-from .api.grading_api import grade_text_payload
-from .config.env import load_env
-from .line.signature_guard import is_valid_line_signature
-from .line.webhook import handle_webhook_body
-from .utils.logger import logger
+from api.grading_api import grade_text_payload
+from config.env import load_env
+from line.signature_guard import is_valid_line_signature
+from line.webhook import handle_webhook_body
+from utils.logger import logger
 
 
 class ChattieHandler(BaseHTTPRequestHandler):
@@ -81,4 +81,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

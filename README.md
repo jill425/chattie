@@ -37,7 +37,6 @@ chattie_py/
 ├── tests/               # 核心邏輯測試
 │   └── test_core.py
 ├── utils/               # 共用錯誤、logger、文字工具
-├── main.py              # 啟動入口包裝
 ├── server.py            # HTTP server 與路由
 ├── pyproject.toml       # Python 專案設定
 └── SDD.md               # 系統設計文件
@@ -67,11 +66,10 @@ chattie_py/
 
 ## 啟動服務
 
-目前程式碼使用 package relative imports。請從 `chattie_py` 的上一層目錄啟動：
+使用 uv 從專案根目錄啟動：
 
 ```bash
-cd ..
-python3 -m chattie_py.server
+uv run python server.py
 ```
 
 啟動後預設監聽：

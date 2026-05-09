@@ -5,8 +5,8 @@ import re
 from dataclasses import dataclass
 from typing import Literal
 
-from ..config.constants import LLM_UPGRADE_THRESHOLD
-from ..nlp.scorer import NlpScore
+from config.constants import LLM_UPGRADE_THRESHOLD
+from nlp.scorer import NlpScore
 
 LLM_MIN_WORD_COUNT = 4
 WORD_PATTERN = re.compile(r"[A-Za-z0-9]+(?:'[A-Za-z0-9]+)?")
@@ -59,4 +59,3 @@ def route_grading(text: str, nlp_score: NlpScore) -> RoutingDecision:
         nlp_score,
         f"overallScore {score} < threshold {LLM_UPGRADE_THRESHOLD}, upgrading to LLM",
     )
-

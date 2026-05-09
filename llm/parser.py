@@ -5,7 +5,7 @@ import re
 from dataclasses import dataclass
 from typing import Any
 
-from ..utils.errors import LlmParseError
+from utils.errors import LlmParseError
 
 
 @dataclass(frozen=True)
@@ -37,4 +37,3 @@ def parse_response(content: str | dict[str, Any]) -> ParsedResponse:
         suggestion="" if "suggestion" not in parsed else str(parsed["suggestion"]),
         tips="" if "tips" not in parsed else str(parsed["tips"]),
     )
-

@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from ..grading.types import Issue, IssueGroup
+from grading.types import Issue, IssueGroup
 
 
 @dataclass(frozen=True)

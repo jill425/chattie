@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from .types import GradingResult, Issue
+from grading.types import GradingResult, Issue
 
 ISSUE_LIMIT = 3
 
