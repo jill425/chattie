@@ -94,7 +94,9 @@ class CoreLogicTest(unittest.TestCase):
             "message": {"type": "text", "text": "I go to school yesterday."},
             "source": {"type": "group"},
         }
-        self.assertEqual(should_grade_message(group_without_command).reason, "missing-group-trigger")
+        group_decision = should_grade_message(group_without_command)
+        self.assertEqual(group_decision.action, "grade")
+        self.assertEqual(group_decision.text, "I go to school yesterday.")
 
         group_with_command = {
             "type": "message",

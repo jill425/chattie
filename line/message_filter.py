@@ -74,11 +74,11 @@ def should_grade_message(event: dict) -> MessageFilterDecision:
 
     if _is_group_like_source(event.get("source")):
         command_text = _extract_group_command_text(text)
-        if not command_text:
-            return MessageFilterDecision("skip", reason="missing-group-trigger")
-        reason = _validate_text(command_text)
-        if reason:
-            return MessageFilterDecision("skip", reason=reason)
-        return MessageFilterDecision("grade", text=command_text)
+        if command_text:
+            reason = _validate_text(command_text)
+            if reason:
+                return MessageFilterDecision("skip", reason=reason)
+            return MessageFilterDecision("grade", text=command_text)
+        return MessageFilterDecision("grade", text=text)
 
     return MessageFilterDecision("grade", text=text)

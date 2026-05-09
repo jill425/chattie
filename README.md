@@ -150,7 +150,7 @@ https://<your-domain>/callback
 訊息行為：
 
 - 一對一聊天：直接輸入英文句子即可批改。
-- 群組或聊天室：需使用 `/check`、`/grade` 或 `/fix` 開頭，例如 `/check I go to school yesterday.`。
+- 群組或聊天室：直接輸入英文句子即可批改；也可使用 `/check`、`/grade` 或 `/fix` 開頭，例如 `/check I go to school yesterday.`。
 - 非文字、太短、網址比例太高、超過 1000 字或包含中文的訊息會被略過或回覆提示。
 
 ## 檢查與測試

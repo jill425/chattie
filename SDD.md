@@ -138,7 +138,7 @@ Status: DONE
 - Non-message events are skipped.
 - Non-text messages are skipped.
 - Empty text, text over 1000 chars, Han text, URL-heavy text, and low-signal noise are skipped.
-- Group and room messages must start with `/check`, `/grade`, or `/fix`.
+- Group and room messages are graded directly. `/check`, `/grade`, and `/fix` prefixes are also accepted and stripped before grading.
 - Direct user text is graded without a command prefix.
 
 ### NLP Scoring
