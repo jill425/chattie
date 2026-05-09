@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from grading.types import GradingResult, Issue
 
-ISSUE_LIMIT = 3
-
 
 def _format_issue(issue: Issue) -> str:
     replacements = ""
@@ -16,15 +14,13 @@ def _format_issue(issue: Issue) -> str:
 def _format_issue_block(title: str, issues: list[Issue]) -> str | None:
     if not issues:
         return None
-    lines = [f"{title}（{len(issues)} 個）"]
-    lines.extend(_format_issue(issue) for issue in issues[:ISSUE_LIMIT])
-    if len(issues) > ISSUE_LIMIT:
-        lines.append(f"（另有 {len(issues) - ISSUE_LIMIT} 個問題）")
+    lines = [f"{title}："]
+    lines.extend(_format_issue(issue) for issue in issues)
     return "\n".join(lines)
 
 
 def format_reply(result: GradingResult) -> str:
-    blocks = [f"原文：{result.original_text}"]
+    blocks = []
     grammar_block = _format_issue_block("文法", result.grammar.issues)
     spelling_block = _format_issue_block("拼字", result.spelling.issues)
 
@@ -38,4 +34,6 @@ def format_reply(result: GradingResult) -> str:
         blocks.append(f"建議：{result.suggestion}")
     if result.source == "nlp+llm" and result.tips:
         blocks.append(f"提示：{result.tips}")
+    total_tokens = result.llm_usage.total_tokens if result.llm_usage is not None else 0
+    blocks.append(f"Token 用量：{total_tokens}")
     return "\n\n".join(blocks)

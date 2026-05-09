@@ -118,9 +118,17 @@ curl -X POST http://localhost:3000/grade \
     "issues": []
   },
   "suggestion": "I went to school yesterday.",
-  "tips": "Use past tense for past time expressions."
+  "tips": "Use past tense for past time expressions.",
+  "llmUsage": {
+    "model": "claude-haiku-4-5-20251001",
+    "inputTokens": 120,
+    "outputTokens": 45,
+    "totalTokens": 165
+  }
 }
 ```
+
+當批改流程有使用 LLM 時，服務也會在 server log 記錄 `model`、`input_tokens`、`output_tokens` 與 `total_tokens`。若路由結果是 `nlp-only`，回應不會包含 `llmUsage`。
 
 輸入限制：
 

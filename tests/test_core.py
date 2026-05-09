@@ -4,7 +4,7 @@ import unittest
 from api.grading_api import grade_text_payload
 from grading.formatter import format_reply
 from grading.router import route_grading
-from grading.types import GradingResult, Issue, IssueGroup
+from grading.types import GradingResult, Issue, IssueGroup, LlmUsage
 from line.message_filter import should_grade_message
 from line.signature_guard import is_valid_line_signature
 from llm.parser import parse_response
@@ -22,6 +22,7 @@ def sample_result(text="I go to school yesterday."):
         spelling=IssueGroup(100, []),
         suggestion="I went to school yesterday.",
         tips="Use past tense for past time expressions.",
+        llm_usage=LlmUsage("claude-haiku-4-5-20251001", 120, 45, 165),
     )
 
 
@@ -136,9 +137,12 @@ class CoreLogicTest(unittest.TestCase):
     def test_formatter_includes_issues_suggestion_and_tips(self):
         text = format_reply(sample_result())
         self.assertNotIn("分數", text)
-        self.assertIn("文法", text)
+        self.assertNotIn("原文：", text)
+        self.assertNotIn("（1 個）", text)
+        self.assertIn("文法：", text)
         self.assertIn("I went to school yesterday.", text)
         self.assertIn("Use past tense", text)
+        self.assertTrue(text.endswith("Token 用量：165"))
 
     def test_grade_text_payload_validation_and_success(self):
         status, body = grade_text_payload({"text": "  "}, sample_result)
@@ -153,6 +157,9 @@ class CoreLogicTest(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertEqual(body["originalText"], "I go to school yesterday.")
         self.assertEqual(body["grammar"]["issues"][0]["ruleId"], "PAST_TENSE")
+        self.assertEqual(body["llmUsage"]["inputTokens"], 120)
+        self.assertEqual(body["llmUsage"]["outputTokens"], 45)
+        self.assertEqual(body["llmUsage"]["totalTokens"], 165)
 
     def test_line_signature_validation(self):
         body = json.dumps({"events": []}).encode()
